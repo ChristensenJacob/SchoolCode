@@ -1,0 +1,4 @@
+- Add a reference to the source item file in the item class
+	Use it when loading the map to prevent item duplication
+
+- Remove the Look command, instead run that option each time the player enters a new area and output nothing if nothing is there

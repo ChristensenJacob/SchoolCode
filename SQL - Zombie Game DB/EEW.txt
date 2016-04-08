@@ -1,0 +1,84 @@
+ENTITIES
+Creature (Has coordinates)
+	Superclass for Hellspawn and Earthspawn, used in the Inventory relation
+	All creatures have a creatureID
+	Voodoo Points - Derived
+		Monsters get them from the eating flesh formula
+		Humans get them from killing monsters and humans
+		A human who becomes a monster keeps their voodoo points
+	BA Factor - Derived
+	Einstein Factor - Has a default, but can be changed
+	Health
+	Strength - 
+	Intelligence
+	Inventory
+		1:N relation of Creature to Item
+Zombie
+	FleshConsumed (pounds)
+	ZName
+	ZVirus
+
+ZombieKing - Derived
+
+Battle
+	As in Zombie.txt
+
+Pack
+
+Human
+	Hunter/Prey (boolean, isHunter)
+
+LordMarshal - isA Hunter
+
+Vampire
+
+Dragon
+
+Ghoul
+
+Witch
+
+Hellspawn - Dragon, Ghoul, Witch
+Earthspawn - Human, Vampire, Zombie
+
+EEWC (Epic Evil World Coordinate)
+	Bloodline (longitude)
+	Dragonline (latitude)
+	Inhabiting
+		Man-Made Structure (kingdom, hut, room, etc)
+
+Terrain
+	Nature (mountain, swamp, forest)
+	Man-made Structure (nested hierarchy)
+
+Man-Made Structure (has coordinates)
+	Kingdom (with nature type(s) and derived sum of populations inside kingdom)
+		1-N Castles (with nature type and population)
+			1-N Rooms (connected to a single castle or hut)
+				1-N Pathways
+					Healing, Harmful, or Neutral
+					Can connect any 2 rooms
+		Hut (anyone in man-made terrain and not in a castle is in a hut)
+		(Huts have nature type and population too, and a single room)
+
+Kingdom
+	PopulationCurrent
+	PopulationMax
+	Nature Type
+
+
+COMMON ATTRIBUTES
+	
+
+
+RELATIONS
+Coordinates (1:N from all entities to EEWCs)
+	Large object have multiple coords, small objects have one coord
+Thumps
+	Humans:Monsters
+
+
+Kingdom of Elbonia
+	Small, no buildings, one hut, swamp
+Zombies
+	Albertius Gorditus (fat zombie, multiple coordinates)

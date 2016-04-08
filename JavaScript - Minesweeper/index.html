@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>CS2550 - Jacob Christensen</title>
+<link href="main.css" rel="stylesheet" />
+</head>
+<body>
+
+<div id="inTitle"><p>CS 2550
+<br />Jacob Christensen
+<br />Minesweeper</p></div>
+<!-- 10479695 -->
+
+<div id="inImg">
+<hr />
+<img src="img/Minesweeper_XP.png" title="Image (c) Microsoft Corporation, permission in source" alt="Minesweeper_XP.png" />
+<!--
+Image Copyright Info
+This image is a copyrighted screen shot of a commercially-released computer software product of Microsoft Corporation.
+Microsoft Corporation has allowed screen shots of its commercially-released computer software products to be used in advertising, documentations,
+educational materials, videos and web sites as long as they are not obscene or pornographic, are not disparaging, defamatory,
+or libelous to Microsoft, and are not digitally altered (except for being resized).
+Taken from https://en.wikipedia.org/wiki/File:Minesweeper_XP.png
+-->
+</div>
+
+<div id="inGame">
+<p><a href="grid.htm" target="_blank">Play Game</a>
+<br /><a href="documentation.html" target="_blank">Game Documentation</a>
+</p>
+</div>
+
+<div id="inText"><p>
+<h2>Description</h2>
+Minesweeper is a single player puzzle game. The objective is to choose tiles on square board and clear the board.
+<br />The board also contains hidden mines which detonate if they are chosen.
+<br />If a tile is chosen that is not a mine, it either reveals the number (but not position) of mines around it or,
+<br />if there are no mines, reveals all tiles around it.
+<br /><a href="https://en.wikipedia.org/wiki/Minesweeper_%28video_game%29" target="_blank">Wikipedia Link</a>
+</p>
+
+<hr />
+<p>
+<h2>Preliminary Software Design</h2>
+<h3>Global Variables:</h3>
+<ul>
+<li>NumMines (int)</li>
+<li>NumSquares (int)</li>
+<li>gameWin (int)</li>
+</ul>Initialized at game start, NumMines decreases when a mine is flagged and NumSquares decreases when a square is clicked. Neither decrease if a non-mine is flagged.
+<br />Victory is achieved when both of the variables reach zero, in which case gameWin is set to 1.
+<br /><h3>Tiles:</h3>
+<b>{"mine": false, "revealed": false, "flagged": false, "count": 0}</b>
+<br />When a tile is clicked it either ends the game (if isMine is true), reveals its number (if >0), or reveals nearby tiles (if number=0). It does nothing if the tile is flagged.
+<br /><h3>The Grid</h3>
+<b>{ {tile, tile, tile...}, {tile, tile, tile...}, {tile, tile, tile...} ...}</b>
+<br />A 2-dimensional array of tile objects. The outer array is the x-coord, the inner array is the y-coord (grid[x][y]).
+<br /><h3>Board Setup:</h3>
+Tiles are initialized as 0,false. A number of random mines are generated. When each mine is placed, it increments the counter of each surrounding tile and sets its current tile to true.
+<br />If a mine would be placed on an existing mine, it skips that tile and tries again up to 10 times. If it fails to place a mine 10 times, it stops adding mines.
+<br /><h3>Internal Functions</h3>
+<b>setMine(x,y)</b> - attempts to set 'mine' in a tile to true. Returns false if the tile is already a mine.
+<br /><b>checkVictory()</b> - Simply checks to see if numMines and numTiles are both 0. If they are, sets the gameWin to 1.
+<br /><h3>External Functions</h3>
+<b>revealTile(x,y)</b> - reveals a tile. If the tile is a mine, it sets the gameWin to -1 and returns the MINE constant. If the tile is a 0, it also reveals tiles in the four cardinal directions around the first.
+<br /><b>drawTile(x,y)</b> - Returns the value of a tile. A constant for tiles that haven't been revealed yet, constants for mines and flags, or the count of nearby mines.
+<br /><b>flag(x,y)</b> - Flags or unflags a tile. Decrements the numMines counter if the tile being flagged is a mine, and calls checkVictory.
+</p></div>
+
+
+</body>
+</html>

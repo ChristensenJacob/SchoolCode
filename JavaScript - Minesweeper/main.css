@@ -1,0 +1,93 @@
+/*
+Jacob Christensen
+CS2550
+*/
+
+body {
+	background-color: #AAAAFF;
+}
+
+p {
+	text-align: left;
+}
+
+div {
+	margin-left: auto;
+	margin-right: auto;
+	width: 800px;
+}
+td {
+	width: 20px;
+	height: 20px;
+	text-align: center;
+	vertical-align: center;
+}
+.gamediv {
+	width: 800px; 
+}
+.blu {
+	color: #3333CC;
+}
+.red {
+	color: #FF0000;
+}
+/* BLANK */
+.gr-3 {
+	background-color: #CCCCCC;
+	color: #CCCCCC;
+}
+/* FLAG */
+.gr-2 {
+	background-color: #3333CC;
+	color: #6666FF;
+}
+/* MINE */
+.gr-1 {
+	background-color: #CC0000;
+	color: #FF0000;
+}
+
+.gr0 {
+	background-color: #AAAAAA;
+	color: #CCCCCC;
+}
+
+.gr1 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr2 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr3 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr4 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr5 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr6 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr7 {
+	background-color: #AAAAAA;
+	color: #333333;
+}
+
+.gr8 {
+	background-color: #AAAAAA;
+	color: #333333;
+}

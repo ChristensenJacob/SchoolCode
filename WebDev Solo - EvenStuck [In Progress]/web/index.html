@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="esApp">
+<head>
+    <meta charset="UTF-8">
+    <title>EvenStuck Demo Page</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
+    <style>
+        .clickable{
+            cursor: pointer
+        }
+    </style>
+
+    <script>
+        var app = angular.module('esApp', []);
+        app.controller('esController', function($scope, $http){
+
+            var es = this;
+            es.data = {'response':'none yet'};
+
+            es.demos = [
+                {'title' : 'Get all players', 'apiCall' : '/api/v1/allusers', 'extra' : false},
+                {'title' : 'Get all ACTIVE players', 'apiCall' : '/api/v1/activeusers', 'extra' : false},
+                {'title' : 'Get object description', 'apiCall' : '/api/v1/description/', 'extra' : true}
+            ];
+            //http://localhost:45500/api/v1/allusers
+            es.apiCall = function(index, id) {
+                var _id = id;
+                var apicall = demos[index].apiCall;
+                //$http.get('http://localhost:45500' + apicall + _id)
+                $http.get('http://localhost:45500/api/v1/allusers')
+                        .then(function(response){
+                            es.data = response.data;
+                        });
+            };
+        });
+    </script>
+</head>
+<body ng-controller="esController as es">
+<div class="container">
+    <div class="jumbotron">
+        <h1>EvenStuck Demo Page</h1>
+    </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Results of API Call:
+            </div>
+            <div class="panel-body">
+                {{es.data}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                API test functions:
+            </div>
+            <div class="panel-body">
+                <table ng-init="num=1">
+                    <div class="row" ng-repeat="row in es.demos">
+                        <div class="col-md-3">{{row.title}}</div>
+                        <div class="col-md-6" ng-if="!row.extra">
+                            <button ng-click="apiCall(row.index,null)" class="btn btn-warning">CALL</button>
+                        </div>
+                        <div class="col-md-2" ng-if="row.extra">
+                            <input type="text" class="form-control" id="input_{{row.index}}" ng-model="num">
+                        </div>
+                        <div class="col-md-4" ng-if="row.extra">
+                            <button ng-click="apiCall(row.index,num)" class="btn btn-warning">CALL</button>
+                        </div>
+                    </div>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

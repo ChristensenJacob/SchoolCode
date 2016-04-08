@@ -1,0 +1,55 @@
+// NOTES
+Attribute{Foreign Attribute:Source Table}
+[Key Attribute]
+(Derived Attribute)
+Packs count as creatures because it makes life easier
+Only structures get multiple EEWCs, massive creatures are located at their center of mass
+oldVP - VP the human had before turning into a zombie or vampire
+
+
+// OBJECTS
+
+Creature([cID], {EEWC}, (BA Factor), Einstein Factor, (Voodoo Points), (strength), health, (intelligence))
+
+Human([{cID:Creature}], hFirst, hLast, isHunter, MarshallID{cID:Creature})
+	(Allows for multiple groups of humans, also monsters in disguise as marshalls)
+Zombie([zID], zName, zVirus, fleshConsumed, {cID:Creature}, {esID:EarthSpawn}, oldVP)
+	(ZomKing({zID:Zombie}))
+Vampire([vID], vName, humansDrained, {cID:Creature}, {esID:EarthSpawn}, oldVP)
+Dragon([dID], commonName, broodName, {cID:Creature}, {hsID:HellSpawn})
+Ghoul([gID], gName, {cID:Creature}, {hsID:HellSpawn})
+Witch([wID], wFirst, wLast, magic, {cID:Creature}, {hsID:HellSpawn})
+Pack([pID], {cID:Creature}, {esID:EarthSpawn})
+Battle([bID], {EEWC})
+EEWC(bloodline, dragonline)
+Nature([nType])
+Structure([sID], {nType})
+Kingdom([kID], Ruler{cID:Creature}, kName, population, MAXpopulation, (value), worth)
+Castle([casID], {sID:Structure})
+Room([roomID], {sID:Structure})
+Pathway([pathID], {sID:Structure})
+Hut([hutID], {sID:Structure})
+Item([itemID], {EEWC})
+Weapon([wepID], {itemID:Item})
+Artifact([arfID], {itemID:Item})
+
+// RELATIONS
+
+Participates{Battle:Creature}()
+Slays{Creature:Creature}()
+Located{Structure:EEWC}()
+Member{Zombie:Pack}()
+Within{Structure:Structure}()
+Connects{Room:Pathway}()
+Possesses{Creature:Item}()
+
+// EQUATIONS
+
+BA Factor: Sum(Item value in possession) + age^2 + Sum(Conquered Kingdoms) + health
+Strength: BA Factor * Epic Scale
+Intelligence: (Voodoo Points + Einstein Factor) * Int Scale
+Voodoo Points: ((pounds of fleash eaten/20) * BA factor) / age
+	VP Human: Sum(Creature Killed * Creature Scale)
+	VP Vamp: (humans drained of blood * BA factor) / age + (oldVP)
+	VP Zom: (regular VP) + (oldVP)
+Kingdom Value: (current population / MAX population) * Kingdom worth

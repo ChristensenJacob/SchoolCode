@@ -1,0 +1,35 @@
+<!--
+Jacob Christensen
+CS2550
+Original images from OpenClipart.org
+-->
+<html>
+<head>
+<title>Minesweeper!</title>
+<link href="main.css" rel="stylesheet" />
+<script src="minesweeper.js"></script>
+<script src="grid.js"></script>
+</head>
+<body>
+<div id="grSave">
+<p><button onclick="grSave()">Save</button>
+<button onclick="grLoad()">Load</button></p>
+</div>
+<div id="grMenu">
+<p>
+X: <input type="text" name="X" id="grXVal" maxlength="2" size="2" />
+Y: <input type="text" name="Y" id="grYVal" maxlength="2" size="2" />
+Mines: <input type="text" name="M" id="grMVal" maxlength="3" size="3" />
+<br />Generate grid (max 99/99/999, min 1, default 10)
+<br />Warning: Large grid sizes may render poorly on smaller screens
+<br /><button onclick="callGrid()">Generate!</button>
+</p>
+</div>
+<div id="grTrack"><p>No cells activated yet</p></div>
+<div id="grGrid" class="gamediv">
+<p>No grid generated yet :c</p>
+</div>
+<div id="grFlag"></div>
+<div id="grTest"><button onclick="grTest()">XMLHTTP</button></div>
+</body>
+</html>
