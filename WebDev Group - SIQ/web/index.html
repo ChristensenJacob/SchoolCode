@@ -1,0 +1,349 @@
+<html ng-app="siqApp">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
+    <style>
+        .clickable{
+            cursor: pointer
+        }
+    </style>
+
+    <script>
+        var app = angular.module('siqApp', []);
+    </script>
+    <script src="scripts/mongoController.js"></script>
+    <script src="scripts/mysqlController.js"></script>
+    <script src="scripts/fsdbController.js"></script>
+    <script src="scripts/cassandraController.js"></script>
+    <script src="scripts/redisController.js"></script>
+
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8">
+            <div class="row">
+                <div class="panel panel-default" ng-controller="mysqlController as mysql" ng-init="siqMysql=false">
+                <div class="panel-heading" ng-click="siqMysql = !siqMysql">
+                    <h2>MySQL</h2>
+                </div>
+                <div class="panel-body" ng-if="siqMysql" ng-init="mysqlAdd=0">
+                    <div class="row" ng-repeat="entry in mysql.data">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span ng-click="mysql.getEntry($index)" class ="clickable">{{entry.subject}}</span>
+                          <span class="pull-right">
+                             <span class="clickable glyphicon glyphicon-pencil text-warning" ng-click="mysql.getEntry($index)"></span> &nbsp;
+                             <span class="clickable glyphicon glyphicon-trash text-danger" ng-click="mysql.deleteEntry($index)"></span>
+                          </span>
+                            </div>
+                            <div class="panel-body" ng-show="mysql.panelNum == $index && mysql.editNum != $index">{{entry.content}}
+                                <button class="btn btn-warning" ng-click="mysql.editNum = $index">Edit</button>
+                            </div>
+                            <div ng-show="mysql.panelNum == $index && mysql.editNum == $index">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="mysqlEditSubject">Subject</label>
+                                        <input type="text" class="form-control" id="mysqlEditSubject" placeholder="Subject" ng-model="entry.subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mysqlEditContent">Content</label>
+                                        <textarea id="mysqlEditContent" class="form-control" rows="3" ng-model="entry.content"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-default" ng-click="mysql.updateEntry($index,entry.subject,entry.content)">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" ng-click="mysqlAdd=1">
+                                Add Entry &nbsp; <span class="clickable glyphicon glyphicon-pencil text-warning"></span>
+                            </div>
+                            <div class="panel-body" ng-show="mysqlAdd==1">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="mysqlSubject">Subject</label>
+                                        <input type="text" class="form-control" id="mysqlSubject" placeholder="Subject" ng-model="siqSubject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mysqlContent">Content</label>
+                                        <textarea id="mysqlContent" class="form-control" rows="3" ng-model="siqContent"></textarea>
+                                    </div>
+                                    <span ng-click="mysqlAdd=0"><button type="submit" class="btn btn-default" ng-click="mysql.postEntry( siqSubject, siqContent )">Submit</button></span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <pre>{{ mysql.data | json }}</pre>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default" ng-controller="mongoController as mongo" ng-init="siqMongo=false">
+                <div class="panel-heading" ng-click="siqMongo=!siqMongo">
+                    <h2>MongoDB</h2>
+                </div>
+                <div class="panel-body" ng-if="siqMongo" ng-init="mongoAdd=0">
+                    <div class="row" ng-repeat="entry in mongo.data">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span ng-click="mongo.getEntry($index)" class ="clickable">{{entry.subject}}</span>
+                          <span class="pull-right">
+                             <span class="clickable glyphicon glyphicon-pencil text-warning" ng-click="mongo.getEntry($index)"></span> &nbsp;
+                             <span class="clickable glyphicon glyphicon-trash text-danger" ng-click="mongo.deleteEntry($index)"></span>
+                          </span>
+                            </div>
+                            <div class="panel-body" ng-show="mongo.panelNum == $index && mongo.editNum != $index">{{entry.content}}
+                                <button class="btn btn-warning" ng-click="mongo.editNum = $index">Edit</button>
+                            </div>
+                            <div ng-show="mongo.panelNum == $index && mongo.editNum == $index">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="mongoEditSubject">Subject</label>
+                                        <input type="text" class="form-control" id="mongoEditSubject" placeholder="Subject" ng-model="entry.subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mongoEditContent">Content</label>
+                                        <textarea id="mongoEditContent" class="form-control" rows="3" ng-model="entry.content"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-default" ng-click="mongo.updateEntry($index,entry.subject,entry.content)">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" ng-click="mongoAdd=1">
+                                Add Entry &nbsp; <span class="clickable glyphicon glyphicon-pencil text-warning"></span>
+                            </div>
+                            <div class="panel-body" ng-show="mongoAdd==1">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="mongoSubject">Subject</label>
+                                        <input type="text" class="form-control" id="mongoSubject" placeholder="Subject" ng-model="siqSubject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="mongoContent">Content</label>
+                                        <textarea id="mongoContent" class="form-control" rows="3" ng-model="siqContent"></textarea>
+                                    </div>
+                                    <span ng-click="mongoAdd=0"><button type="submit" class="btn btn-default" ng-click="mongo.postEntry( siqSubject, siqContent )">Submit</button></span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <pre>{{ mongo.data | json }}</pre>
+                </div>
+            </div>
+            </div>
+			<!--
+            <div class="row">
+                <div class="panel panel-default" ng-controller="cassandraController as cassandra" ng-init="siqCassandra=false">
+                <div class="panel-heading" ng-click="siqCassandra = !siqCassandra">
+                    <h2>Cassandra</h2>
+                </div>
+                <div class="panel-body" ng-if="siqCassandra" ng-init="cassandraAdd=0">
+                    <div class="row" ng-repeat="entry in cassandra.data">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span ng-click="cassandra.getEntry($index)" class ="clickable">{{entry.subject}}</span>
+                          <span class="pull-right">
+                             <span class="clickable glyphicon glyphicon-pencil text-warning" ng-click="cassandra.getEntry($index)"></span> &nbsp;
+                             <span class="clickable glyphicon glyphicon-trash text-danger" ng-click="cassandra.deleteEntry($index)"></span>
+                          </span>
+                            </div>
+                            <div class="panel-body" ng-show="cassandra.panelNum == $index && cassandra.editNum != $index">{{entry.content}}
+                                <button class="btn btn-warning" ng-click="cassandra.editNum = $index">Edit</button>
+                            </div>
+                            <div ng-show="cassandra.panelNum == $index && cassandra.editNum == $index">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="cassandraEditSubject">Subject</label>
+                                        <input type="text" class="form-control" id="cassandraEditSubject" placeholder="Subject" ng-model="entry.subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cassandraEditContent">Content</label>
+                                        <textarea id="cassandraEditContent" class="form-control" rows="3" ng-model="entry.content"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-default" ng-click="cassandra.updateEntry($index,entry.subject,entry.content)">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" ng-click="cassandraAdd=1">
+                                Add Entry &nbsp; <span class="clickable glyphicon glyphicon-pencil text-warning"></span>
+                            </div>
+                            <div class="panel-body" ng-show="cassandraAdd==1">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="cassandraSubject">Subject</label>
+                                        <input type="text" class="form-control" id="cassandraSubject" placeholder="Subject" ng-model="siqSubject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="cassandraContent">Content</label>
+                                        <textarea id="cassandraContent" class="form-control" rows="3" ng-model="siqContent"></textarea>
+                                    </div>
+                                    <span ng-click="cassandraAdd=0"><button type="submit" class="btn btn-default" ng-click="cassandra.postEntry( siqSubject, siqContent )">Submit</button></span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <pre>{{ cassandra.data | json }}</pre>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default" ng-controller="redisController as redis" ng-init="siqRedis=false">
+                <div class="panel-heading" ng-click="siqRedis = !siqRedis">
+                    <h2>Redis</h2>
+                </div>
+                <div class="panel-body" ng-if="siqRedis" ng-init="redisAdd=0">
+                    <div class="row" ng-repeat="entry in redis.data">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span ng-click="redis.getEntry($index)" class ="clickable">{{entry.subject}}</span>
+                          <span class="pull-right">
+                             <span class="clickable glyphicon glyphicon-pencil text-warning" ng-click="redis.getEntry($index)"></span> &nbsp;
+                             <span class="clickable glyphicon glyphicon-trash text-danger" ng-click="redis.deleteEntry($index)"></span>
+                          </span>
+                            </div>
+                            <div class="panel-body" ng-show="redis.panelNum == $index && redis.editNum != $index">{{entry.content}}
+                                <button class="btn btn-warning" ng-click="redis.editNum = $index">Edit</button>
+                            </div>
+                            <div ng-show="redis.panelNum == $index && redis.editNum == $index">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="redisEditSubject">Subject</label>
+                                        <input type="text" class="form-control" id="redisEditSubject" placeholder="Subject" ng-model="entry.subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="redisEditContent">Content</label>
+                                        <textarea id="redisEditContent" class="form-control" rows="3" ng-model="entry.content"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-default" ng-click="redis.updateEntry($index,entry.subject,entry.content)">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" ng-click="redisAdd=1">
+                                Add Entry &nbsp; <span class="clickable glyphicon glyphicon-pencil text-warning"></span>
+                            </div>
+                            <div class="panel-body" ng-show="redisAdd==1">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="redisSubject">Subject</label>
+                                        <input type="text" class="form-control" id="redisSubject" placeholder="Subject" ng-model="siqSubject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="redisContent">Content</label>
+                                        <textarea id="redisContent" class="form-control" rows="3" ng-model="siqContent"></textarea>
+                                    </div>
+                                    <span ng-click="redisAdd=0"><button type="submit" class="btn btn-default" ng-click="redis.postEntry( siqSubject, siqContent )">Submit</button></span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <pre>{{ redis.data | json }}</pre>
+                </div>
+            </div>
+            </div>
+            <div class="row">
+                <div class="panel panel-default" ng-controller="fsdbController as fsdb" ng-init="siqFsdb=false">
+                <div class="panel-heading" ng-click="siqFsdb=!siqFsdb">
+                    <h2>FSDB</h2>
+                </div>
+                <div class="panel-body" ng-if="siqFsdb" ng-init="fsdbAdd=0">
+                    <div class="row" ng-repeat="entry in fsdb.data">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span ng-click="fsdb.getEntry($index)" class ="clickable">{{entry.subject}}</span>
+                          <span class="pull-right">
+                             <span class="clickable glyphicon glyphicon-pencil text-warning" ng-click="fsdb.getEntry($index)"></span> &nbsp;
+                             <span class="clickable glyphicon glyphicon-trash text-danger" ng-click="fsdb.deleteEntry($index)"></span>
+                          </span>
+                            </div>
+                            <div class="panel-body" ng-show="fsdb.panelNum == $index && fsdb.editNum != $index">{{entry.content}}
+                                <button class="btn btn-warning" ng-click="fsdb.editNum = $index">Edit</button>
+                            </div>
+                            <div ng-show="fsdb.panelNum == $index && fsdb.editNum == $index">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="fsdbEditSubject">Subject</label>
+                                        <input type="text" class="form-control" id="fsdbEditSubject" placeholder="Subject" ng-model="entry.subject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fsdbEditContent">Content</label>
+                                        <textarea id="fsdbEditContent" class="form-control" rows="3" ng-model="entry.content"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-default" ng-click="fsdb.updateEntry($index,entry.subject,entry.content)">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" ng-click="fsdbAdd=1">
+                                Add Entry &nbsp; <span class="clickable glyphicon glyphicon-pencil text-warning"></span>
+                            </div>
+                            <div class="panel-body" ng-show="fsdbAdd==1">
+                                <form>
+                                    <div class="form-group">
+                                        <label for="fsdbSubject">Subject</label>
+                                        <input type="text" class="form-control" id="fsdbSubject" placeholder="Subject" ng-model="siqSubject">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fsdbContent">Content</label>
+                                        <textarea id="fsdbContent" class="form-control" rows="3" ng-model="siqContent"></textarea>
+                                    </div>
+                                    <span ng-click="fsdbAdd=0"><button type="submit" class="btn btn-default" ng-click="fsdb.postEntry( siqSubject, siqContent )">Submit</button></span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <pre>{{ fsdb.data | json }}</pre>
+                </div>
+            </div>
+            </div>
+			-->
+        </div>
+        <div class="col-lg-4">
+            <!-- webchat column -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Websockets Chat
+                </div>
+                <div class="panel-body">
+                    <ul id="messages"></ul>
+                </div>
+                <div class="panel-footer">
+                    <form action="">
+                        <input id="wsText" autocomplete="off" /><button>Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
