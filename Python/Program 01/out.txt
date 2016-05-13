@@ -1,0 +1,29 @@
+Total number of territories: 8
+
+Player 1
+Has 3 armies
+Owns 1 territories
+Names of territories: Mars
+
+Player 2
+Has 7 armies
+Owns 3 territories
+Names of territories: Earth, Saturn, Neptune
+
+Player 3
+Has 14 armies
+Owns 2 territories
+Names of territories: Jupiter, Uranus
+
+Player 4
+Has 5 armies
+Owns 1 territories
+Names of territories: Mercury
+
+Player 5
+Has 6 armies
+Owns 1 territories
+Names of territories: Venus
+
+Player 3 has the most armies (14)
+Player 2 owns the most territories (3)

@@ -1,0 +1,8 @@
+Venus,239,Inner Planets
+Jupiter,175,Outer Planets
+Earth,300,Inner Planets
+Saturn,208,Outer Planets
+Mars,604,Inner Planets
+Neptune,329,Outer Planets
+Uranus,4058,Outer Planets
+Mercury,10,Inner Planets

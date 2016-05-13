@@ -1,0 +1,42 @@
+Alaska,11,North America
+Alberta,12,North America
+Central America,13,North America
+Eastern United States,14,North America
+Greenland,15,North America
+Northwest Territory,16,North America
+Ontario,17,North America
+Quebec,18,North America
+Western United States,19,North America
+Argentina,21,South America
+Brazil,22,South America
+Peru,23,South America
+Venezuela,24,South America
+Great Britain,31,Europe
+Iceland,32,Europe
+Northern Europe,33,Europe
+Scandinavia,34,Europe
+Southern Europe,35,Europe
+Ukraine,36,Europe
+Western Europe,37,Europe
+Central Africa,41,Africa
+East Africa,42,Africa
+Egypt,43,Africa
+Madagascar,44,Africa
+North Africa,45,Africa
+South Africa,46,Africa
+Afghanistan,51,Asia
+China,52,Asia
+India,53,Asia
+Irkutsk,54,Asia
+Japan,55,Asia
+Kamchatka,56,Asia
+Middle East,57,Asia
+Mongolia,58,Asia
+Southeast Asia,59,Asia
+Siberia,510,Asia
+Ural,511,Asia
+Yakutsk,512,Asia
+Eastern Australia,61,Australia
+Indonesia,62,Australia
+New Guinea,63,Australia
+Western Australia,64,Australia
